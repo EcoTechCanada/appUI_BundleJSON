@@ -1,0 +1,36 @@
+pre.code {
+	background-color: #eee;
+	border: 1px solid #ddd;
+	border-top-color: #bbb;
+}
+
+.toggle-links {}
+	.toggle-links .toggle-link {
+		text-decoration: none;
+		color: #777;
+		font-size: 12px;
+		text-transform: lowercase;
+		margin-left: 5px;
+	}
+	.toggle-links .toggle-link.active {
+		color: #000;
+		text-decoration: underline;
+	}
+
+.product-table  table * {
+/*	border: none;
+	box-shadow: none; */
+}
+	.product-table .table>:not(:first-child) {
+		/* border: none; */
+	}
+	.product-table thead.table-head {
+		background-color: #f9f9f9;
+	}
+		.product-table thead.table-head th {
+			font-size: 12px;
+		}
+	.product-table .row-active {
+	    background-color: #e5fff0;
+	    border-right: 5px solid #ade1c3 !important;
+	  }
