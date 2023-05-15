@@ -80,6 +80,11 @@
                     <td>9846537362756409</td>
                   </tr>
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td></td>
+                  </tr>
+                </tfoot>
               </table>
               <table id="child-table" class="table table-sm table-striped table-hover invisible w-100">
                 <thead class="table-head w-100">
@@ -101,6 +106,11 @@
                     <td>98465373627564001</td>
                   </tr>
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td></td>
+                  </tr>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -148,75 +158,68 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-  $(document).ready(function() {
-    var originalJsonCode = $('#json-display').text();
-    var selectedRows = [];
+    <script>
+      $(document).ready(function() {
+        var originalJsonCode = $('#json-display').text();
+        var modifiedJsonCode = originalJsonCode;
+        var selectedRow = null;
 
-    $('tbody tr').click(function() {
-      var isSelected = $(this).hasClass('row-active');
-      
-      if (isSelected) {
-        $(this).removeClass('row-active');
-        var index = selectedRows.indexOf(this);
-        if (index > -1) {
-          selectedRows.splice(index, 1);
-        }
-      } else {
-        $(this).addClass('row-active');
-        selectedRows.push(this);
-      }
+        $('tbody tr').click(function() {
+          if (selectedRow === this) {
+            $(this).removeClass('row-active');
+            selectedRow = null;
+            modifiedJsonCode = originalJsonCode;
+          } else {
+            if (selectedRow !== null) {
+              $(selectedRow).removeClass('row-active');
+            }
+            selectedRow = this;
+            $(selectedRow).addClass('row-active');
+            var selectedVariant = $(selectedRow).find('td:eq(2)').text();
+            modifiedJsonCode = originalJsonCode.replace("(parentID)", selectedVariant);
+          }
+          $('#json-display').text(modifiedJsonCode);
+        });
 
-      var modifiedJsonCode = originalJsonCode;
-      selectedRows.forEach(function(row) {
-        var selectedVariant = $(row).find('td:eq(2)').text();
-        modifiedJsonCode = modifiedJsonCode.replace("(childID)", selectedVariant);
+        // Handle click event on the parent link
+        $('#parent-link').click(function(e) {
+          e.preventDefault();
+
+          // Toggle the active class on the links
+          $(this).addClass('active');
+          $('#children-link').removeClass('active');
+
+          // Show/hide the parent table based on link state
+          if ($(this).hasClass('active')) {
+            $('#parent-table').removeClass('invisible').addClass('visible');
+            $('#child-table').removeClass('visible').addClass('invisible');
+          } else {
+            $('#parent-table').removeClass('visible').addClass('invisible');
+          }
+
+          // TODO: Handle parent link functionality
+        });
+
+        // Handle click event on the children link
+        $('#children-link').click(function(e) {
+          e.preventDefault();
+
+          // Toggle the active class on the links
+          $(this).addClass('active');
+          $('#parent-link').removeClass('active');
+
+          // Show/hide the child table based on link state
+          if ($(this).hasClass('active')) {
+            $('#child-table').removeClass('invisible').addClass('visible');
+            $('#parent-table').removeClass('visible').addClass('invisible');
+          } else {
+            $('#child-table').removeClass('visible').addClass('invisible');
+          }
+
+          // TODO: Handle children link functionality
+        });
       });
-
-      $('#json-display').text(modifiedJsonCode);
-    });
-
-    // Handle click event on the parent link
-    $('#parent-link').click(function(e) {
-      e.preventDefault();
-
-      // Toggle the active class on the links
-      $(this).addClass('active');
-      $('#children-link').removeClass('active');
-
-      // Show/hide the parent table based on link state
-      if ($(this).hasClass('active')) {
-        $('#parent-table').removeClass('invisible').addClass('visible');
-        $('#child-table').removeClass('visible').addClass('invisible');
-      } else {
-        $('#parent-table').removeClass('visible').addClass('invisible');
-      }
-
-      // TODO: Handle parent link functionality
-    });
-
-    // Handle click event on the children link
-    $('#children-link').click(function(e) {
-      e.preventDefault();
-
-      // Toggle the active class on the links
-      $(this).addClass('active');
-      $('#parent-link').removeClass('active');
-
-      // Show/hide the child table based on link state
-      if ($(this).hasClass('active')) {
-        $('#child-table').removeClass('invisible').addClass('visible');
-        $('#parent-table').removeClass('visible').addClass('invisible');
-      } else {
-        $('#child-table').removeClass('visible').addClass('invisible');
-      }
-
-      // TODO: Handle children link functionality
-    });
-  });
-</script>
-
-
+    </script>
 
   </body>
 </html>
