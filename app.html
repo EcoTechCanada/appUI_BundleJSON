@@ -128,15 +128,17 @@
                 <!-- Lines of code starts -->
                 [
                   {
-                    "id": "gid://shopify/ProductVariant/(parentID)",
+                    "id": "gid://shopify/ProductVariant/(parentID)", <!-- update ID of bundle parent variant -->
                     "component_reference": {
                       "value": [
+                        <!-- update ID of bundle children variants -->
                         "gid://shopify/ProductVariant/(childID)",
                         "gid://shopify/ProductVariant/(childID)"
                       ]
                     },
                     "component_quantities": {
                       "value": [
+                        <!-- add a quantity of 1 for each bundle child variant -->
                         1,
                         1
                       ]
